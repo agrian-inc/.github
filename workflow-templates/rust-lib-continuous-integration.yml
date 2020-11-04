@@ -3,7 +3,7 @@ name: Continuous Integration
 on:
   push:
   pull_request:
-    branches: [ develop ]
+    branches: [ $default-branch ]
 
 env:
   CARGO_TERM_COLOR: always
