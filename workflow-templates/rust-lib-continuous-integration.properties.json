@@ -1,0 +1,11 @@
+{
+    "name": "Agrian Rust Library CI Workflow",
+    "description": "Agrian CI workflow template for Rust libraries.",
+    "iconName": "rust-programming-language",
+    "categories": [
+        "Rust"
+    ],
+    "filePatterns": [
+        "Cargo.toml$"
+    ]
+}
