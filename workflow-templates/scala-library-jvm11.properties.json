@@ -1,0 +1,7 @@
+{
+  "name": "Scala Library for JVM 1.11 Workflow",
+  "description": "Analytics scala library workflow template.",
+  "iconName": "scala",
+  "categories": ["Scala"],
+  "filePatterns": [".*\\.sbt$", ".*\\.scala$"]
+}
