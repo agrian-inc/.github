@@ -1,0 +1,11 @@
+{
+    "name": "Agrian Rust Security Audit Workflow",
+    "description": "Agrian security audit workflow template for Rust libraries.",
+    "iconName": "rust-programming-language",
+    "categories": [
+        "Rust"
+    ],
+    "filePatterns": [
+        "Cargo.toml$"
+    ]
+}
