@@ -1,0 +1,11 @@
+{
+    "name": "Agrian Rust Sanitizers Workflow",
+    "description": "Agrian sanitizers workflow template for Rust libraries.",
+    "iconName": "rust-programming-language",
+    "categories": [
+        "Rust"
+    ],
+    "filePatterns": [
+        "Cargo.toml$"
+    ]
+}
