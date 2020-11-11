@@ -1,0 +1,50 @@
+name: Rust Sanitizers
+
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        required: false
+        description: 'Rust Sanitizers'
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_REGISTRIES_AGRIAN_REGISTRY_INDEX: ${{ secrets.AGRIAN_CRATES_REGISTRY }}
+
+jobs:
+  sanitizer-test:
+    name: Test with -Zsanitizer=${{ matrix.sanitizer }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sanitizer: [address, memory, thread, leak]
+    steps:
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@ee29fafb6aa450493bac9136b346e51ea60a8b5e
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Install system dependencies (Ubuntu)
+        run: sudo apt-get install -y uuid-dev bzip2
+      - name: Fetch repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          token: ${{ secrets.SHORTS_PAT }}
+          submodules: recursive
+      - name: Install latest nightly
+        uses: actions-rs/toolchain@v1
+        with:
+            toolchain: nightly
+            profile: minimal
+      - name: Test with sanitizer
+        env:
+          RUSTFLAGS: -Zsanitizer=${{ matrix.sanitizer }}
+          RUSTDOCFLAGS: -Zsanitizer=${{ matrix.sanitizer }}
+          # only needed by asan
+          ASAN_OPTIONS: detect_stack_use_after_return=1
+          # Asan's leak detection occasionally complains
+          # about some small leaks if backtraces are captured,
+          # so ensure they're not
+          RUST_BACKTRACE: 0
+        run: cargo +nightly test -Zbuild-std --verbose --target=x86_64-unknown-linux-gnu --all-features
