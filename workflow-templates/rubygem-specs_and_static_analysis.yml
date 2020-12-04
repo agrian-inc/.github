@@ -1,0 +1,31 @@
+name: Specs and Static Analysis
+
+on: push
+
+env:
+  BUNDLE_GEMS__AGRIAN__COM: ${{ secrets.AGRIAN_GEMS_USERNAME }}:${{ secrets.AGRIAN_GEMS_PASSWORD }}
+
+jobs:
+  static_analysis:
+    name: Static Analysis (rubocop)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Run test
+        run: bundle exec rubocop --format github --parallel
+
+  specs:
+    name: Specs (rspec)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Run tests
+        run: bundle exec rspec --format RSpec::Github::Formatter --format progress

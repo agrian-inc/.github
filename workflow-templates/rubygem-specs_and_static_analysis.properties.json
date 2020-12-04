@@ -1,0 +1,12 @@
+{
+    "name": "Agrian RubyGem CI Workflow",
+    "description": "Agrian CI workflow template for RubyGems.",
+    "iconName": "ruby-programming-language",
+    "categories": [
+        "Ruby"
+    ],
+    "filePatterns": [
+        "\\S+\\.gemspec$",
+        "^Gemfile$"
+    ]
+}
